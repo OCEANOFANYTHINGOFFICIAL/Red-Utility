@@ -1,0 +1,21 @@
+{
+  "name": "Red Utility",
+  "short_name": "Red Utility",
+  "icons": [
+    {
+      "src": "src/images/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "src/images/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ff3b30",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "https://oceanofanythingofficial.github.io/Red-Utility",
+  "description": "Discover a treasure trove of free online tools for enhanced productivity. Get started with Red Utility today!"
+}
