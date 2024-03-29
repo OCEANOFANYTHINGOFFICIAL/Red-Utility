@@ -41,45 +41,22 @@
 
     <body data-bs-theme="">
         <script>
-            // Check if the browser supports service workers
-            if ('serviceWorker' in navigator) {
-                // Register the service worker
-                window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/service-worker.js')
+            // Service Worker Registration
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", () => {
+                    navigator.serviceWorker
+                        .register("service-worker.js")
                         .then((registration) => {
-                            console.log('Service worker registered:', registration);
+                            console.log("Service Worker registered:", registration);
                         })
                         .catch((error) => {
-                            console.log('Service worker registration failed:', error);
+                            console.error("Service Worker registration failed:", error);
                         });
                 });
-
-                // Check if the app is installed
-      window.addEventListener('beforeinstallprompt', (event) => {
-        console.log('Install prompt fired');
-        event.preventDefault(); // Prevent Chrome 67 and earlier from automatically showing the prompt
-        window.deferredPrompt = event; // Store the event for later use
-        const installButton = document.getElementById('installButton');
-        installButton.classList.remove('d-none'); // Show install button
-        installButton.addEventListener('click', () => {
-          // Show the installation prompt to the user
-          window.deferredPrompt.prompt();
-          // Wait for the user to respond to the prompt
-          window.deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-              console.log('User accepted the install prompt');
-            } else {
-              console.log('User dismissed the install prompt');
             }
-            // Clear the deferredPrompt variable
-            window.deferredPrompt = null;
-          });
-        });
-      });
-    }
         </script>
         <!--  Preloader Container -->
-        <div class="preloader-container">
+        <!-- <div class="preloader-container">
             <div class="spinner">
                 <div></div>
                 <div></div>
@@ -88,7 +65,7 @@
                 <div></div>
                 <div></div>
             </div>
-        </div>
+        </div> -->
 
         <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
             <div class="container-fluid">
@@ -164,11 +141,6 @@
                     <p class="lead">So why wait? Start exploring our collection of tools today and see how they can help
                         you be more productive.</p>
 
-                    <div class="container mt-5 mb-5">
-                        <div class="text-center d-grid gap-2">
-                            <button id="installButton" class="btn btn-primary d-none">Install Red Utility</button>
-                        </div>
-                    </div>
 
                 </div>
             </div>
