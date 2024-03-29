@@ -55,30 +55,28 @@
                 });
 
                 // Check if the app is installed
-                if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-                    console.log('The app is installed');
-                } else {
-                    console.log('The app is not installed');
-                    const installButton = document.getElementById('installButton');
-                    installButton.classList.remove('d-none');
-
-                    // Show install button
-                    installButton.addEventListener('click', () => {
-                        // Prompt the user to install the app
-                        window.deferredPrompt.prompt();
-                        // Wait for the user to respond to the prompt
-                        window.deferredPrompt.userChoice.then((choiceResult) => {
-                            if (choiceResult.outcome === 'accepted') {
-                                console.log('User accepted the install prompt');
-                            } else {
-                                console.log('User dismissed the install prompt');
-                            }
-                            // Clear the deferredPrompt variable
-                            window.deferredPrompt = null;
-                        });
-                    });
-                }
+      window.addEventListener('beforeinstallprompt', (event) => {
+        console.log('Install prompt fired');
+        event.preventDefault(); // Prevent Chrome 67 and earlier from automatically showing the prompt
+        window.deferredPrompt = event; // Store the event for later use
+        const installButton = document.getElementById('installButton');
+        installButton.classList.remove('d-none'); // Show install button
+        installButton.addEventListener('click', () => {
+          // Show the installation prompt to the user
+          window.deferredPrompt.prompt();
+          // Wait for the user to respond to the prompt
+          window.deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('User accepted the install prompt');
+            } else {
+              console.log('User dismissed the install prompt');
             }
+            // Clear the deferredPrompt variable
+            window.deferredPrompt = null;
+          });
+        });
+      });
+    }
         </script>
         <!--  Preloader Container -->
         <div class="preloader-container">
