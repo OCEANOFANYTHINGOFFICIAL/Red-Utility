@@ -84,9 +84,6 @@ cards.forEach((card) => {
     // extract the image url from the source code from the twitter:image:src meta tag
     const parser = new DOMParser();
     const html = parser.parseFromString(data, "text/html");
-    const imageUrl = html.querySelector('meta[name="twitter:image:src"]').content;
-    // add a new img tag to the card with the fetched image url
-    // card.insertAdjacentHTML("afterbegin", `<img src="${imageUrl}" class="card-img-top img-thumbnail lazy" alt="${imageUrl}">`);
 
     //   get the repo description
     repoDescription = html.querySelector('meta[name="description"]').content.split("-")[0].trim();
