@@ -14,6 +14,7 @@ const urlsToCache = [
 
     // js files
     `${baseURL}/js/script.js`,
+    `${baseURL}/js/search.js`,
     `${baseURL}/js/contact.js`,
     `${baseURL}/js/lazyLoading.js`,
     `${baseURL}/js/onlineStatus.js`,
