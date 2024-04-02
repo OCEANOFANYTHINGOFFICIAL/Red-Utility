@@ -31,9 +31,12 @@ function randomHSL() {
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
 
+
 // fetch the repository image url from the repository page and add it to the card
 repoUrls = [];
 cards = document.querySelectorAll(".fetch-repo-image");
+
+
 cards.forEach((card) => {
     url = card.querySelector("img").src;
     ghrepolocation = url.replace("https://github.com/", "");
@@ -76,18 +79,14 @@ cards.forEach((card) => {
     // Remove the trailing comma and space
     gradientBackground = gradientBackground.slice(0, -2);
 
-
+    // Apply the gradient background to the button
     card.querySelector(".btn").style.background = gradientBackground;
 
-  // fetch the page source code of the repository
-    fetch(url).then((response) => response.text()).then((data) => {
-    // extract the image url from the source code from the twitter:image:src meta tag
-    const parser = new DOMParser();
-    const html = parser.parseFromString(data, "text/html");
-
-    //   get the repo description
-    repoDescription = html.querySelector('meta[name="description"]').content.split("-")[0].trim();
-    card.querySelector(".card-text").textContent = repoDescription;
+    // use the api.github.com to do the same functionality
+    fetch(`https://api.github.com/repos/${ghrepolocation}`).then((response) => response.json()).then((data) => {
+        // get the description of the repo
+        repoDescription = data.description;
+        card.querySelector(".card-text").textContent = repoDescription;
     });
 });
 
@@ -105,6 +104,8 @@ window.onload = function () {
         });
     }, 3000);
 };
+
+
 // Add smooth scrolling to all links
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
@@ -117,46 +118,4 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 });
 
 
-
-// Search functionality
-const searchInput = document.getElementById("searchInput");
-const cardsContainer = document.getElementById("cardsContainer");
-const noResultsMessage = document.createElement("h3");
-noResultsMessage.textContent = "No results found";
-noResultsMessage.classList.add("no-results-message");
-
-// Add the "No results found" message to the DOM
-cardsContainer.appendChild(noResultsMessage);
-
-// Hide the "No results found" message by default
-noResultsMessage.style.display = "none";
-
-// Search functionality
-searchInput.addEventListener("input", function () {
-    const searchValue = searchInput.value.trim().toLowerCase();
-    const cards = cardsContainer.querySelectorAll(".card");
-
-    let resultsFound = false;
-
-    cards.forEach((cardi) => {
-        const title = cardi.querySelector(".card-title").textContent.trim().toLowerCase();
-        const description = cardi.querySelector(".card-text").textContent.trim().toLowerCase();
-        const tag = cardi.querySelector(".sc-15px").textContent.trim().toLowerCase();
-
-        // Check if the search value is found in the title, description, or tag, if not found, hide the entire card (parent element) not just the card image, title, and description
-        if (title.includes(searchValue) || description.includes(searchValue) || tag.includes(searchValue)) {
-            cardi.parentElement.classList.remove("d-none");
-            resultsFound = true;
-        } else {
-            cardi.parentElement.classList.add("d-none");
-        }
-    });
-
-    // Show or hide the "No results found" message based on search results
-    if (resultsFound) {
-        noResultsMessage.style.display = "none";
-    } else {
-        noResultsMessage.style.display = "block";
-    }
-});
 
