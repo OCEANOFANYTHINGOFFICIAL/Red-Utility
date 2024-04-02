@@ -171,6 +171,10 @@ body[data-bs-theme] {
     }
 }
 
+.card-title{
+    font-size: 25px !important;
+}
+
 .card-footer {
     font-size: 13px;
 }
